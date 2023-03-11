@@ -4,15 +4,16 @@
   "license": "Apache-2.0",
   "description": "Svelte implementation of the Carbon Design System",
   "type": "module",
-  "svelte": "src/carbon-components-svelte/index.js",
-  "module": "src/carbon-components-svelte",
+  "module": "dist",
   "scripts": {
     "test:types": "svelte-check --workspace tests",
     "lint": "prettier --write \"**/*.{svelte,md,js,json,ts}\"",
+    "build": "yarn build:sass && yarn build:package",
     "build:css": "node scripts/build-css",
     "build:docs": "node scripts/build-docs",
     "build:lib": "rollup -c",
-    "build:package": "svelte-package",
+    "build:sass": "sass --load-path node_modules --no-source-map ./src/carbon-components-svelte/**/*.scss",
+    "build:package": "svelte-package -i src/carbon-components-svelte",
     "format": "prettier --write \"./**/*.{svelte,js,md}\"",
     "prepack": "yarn build:docs & yarn build:lib",
     "release": "standard-version && yarn prepack"
@@ -24,14 +25,14 @@
     "@carbon/styles": "^1.20.0",
     "@rollup/plugin-commonjs": "^21.0.3",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "@sveltejs/package": "^1.0.2",
+    "@sveltejs/package": "^2.0.2",
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "@tsconfig/svelte": "^3.0.0",
     "autoprefixer": "^10.4.8",
     "carbon-components": "^10.58.3",
     "carbon-icons-svelte": "^11.2.0",
     "postcss": "^8.4.16",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.4",
     "prettier-plugin-svelte": "^2.7.0",
     "rollup": "^2.78.1",
     "rollup-plugin-svelte": "^7.1.0",
@@ -40,10 +41,10 @@
     "standard-version": "^9.5.0",
     "sveld": "^0.18.0",
     "svelte": "^3.55.1",
-    "svelte-check": "^2.8.1",
+    "svelte-check": "^3.0.4",
     "svelte-preprocess": "^4.10.7",
-    "typescript": "^4.7.4",
-    "vite": "^4.0.4"
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
   },
   "peerDependencies": {
     "svelte": "^3.55.1"
@@ -77,5 +78,10 @@
     "Josef Aidt (https://github.com/josefaidt)",
     "Eric Liu (https://github.com/metonym)",
     "Enrico Sacchetti (https://github.com/theetrain)"
-  ]
+  ],
+  "exports": {
+    ".": {
+      "svelte": "./dist/index.js"
+    }
+  }
 }
